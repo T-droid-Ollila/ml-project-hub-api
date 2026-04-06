@@ -1,4 +1,4 @@
-## Today we shall use the Github API to retrieve Machine learning projects
+## Today we shall use the Github API to retrieve Machine learning projects from GITHUB using GITHUB API
 import pandas as pd
 import requests
 import json
