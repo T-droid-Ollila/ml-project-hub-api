@@ -1,4 +1,4 @@
-# ml-project-hub-api
+# Ml-and-data-science-project-hub-api
 # 🚀 GitHub Repository Analyzer (API + Data Pipeline)
 
 ## 📌 Overview
