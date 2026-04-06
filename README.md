@@ -138,5 +138,5 @@ This project is open-source and available under the MIT License.
 
 ## 👨‍💻 Author
 
-**Simiyu**
-
+**Ollila Simiyu**
+www.linkedin.com/in/ollila-simiyu-a9b886363
