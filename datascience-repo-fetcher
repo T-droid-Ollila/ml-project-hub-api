@@ -1,0 +1,46 @@
+## Today we shall use the Github API to retrieve Machine learning projects
+import pandas as pd
+import requests
+import json
+## The time modle is to allow us handle API rate request limits without Github token
+import time
+from pathlib import Path
+def load_ML_pagination():
+  data_path=Path('sample_data')
+  json_path=data_path/'Data_Science.json'
+  data_path.mkdir(parents=True, exist_ok=True)
+  url='https://api.github.com/search/repositories'
+  all_repos = [] # Initialize a list to collect items from all pages
+  for page_num in range(1,4): # Renamed to 'page_num' to avoid shadowing
+    params={
+      'q':'Data Science',
+      'sort':'stars',
+      'order':'desc',
+      'page': page_num,
+      'per_page':100
+    }
+    response=requests.get(url,params=params)
+    if response.status_code==200:
+      time.sleep(3) # Add a 3-second delay between requests
+      data=response.json()
+      all_repos.extend(data['items'])
+    else:
+      print(f"Error fetching data for page {page_num}. Status code: {response.status_code}")
+      # Optionally, you might want to break or continue here based on desired error handling
+  if all_repos: # Only process if items were collected successfully
+    with open(json_path, 'w') as f:
+      json.dump(all_repos, f, indent=4)
+    df=pd.DataFrame(all_repos)
+    df=df[['full_name','stargazers_count','html_url']]
+    ## Rename the above columns 
+    df1=df.rename(columns={
+      'full_name':'repo_name',
+      'stargazers_count': 'stars',
+      'html_url':'url'
+      })
+    df1.to_csv('Data_Science.csv',index=False)
+    return df1
+  else:
+    print('No repositories fetched or an error occurred during fetching.')
+    return [] # Return empty list if no items were collected
+da_ta=load_ML_pagination()
